@@ -1,0 +1,21 @@
+(a) What does the schema look like immediately after the group by?
+  - groupjoin: {
+      group: (
+          moviegenre::genre: chararray,
+          Fltrd::year: int
+      ),
+      jointable: {
+          (
+              moviegenre::movieid: int,
+              moviegenre::genre: chararray,
+              Fltrd::movieid: int,
+              Fltrd::title: chararray,
+              Fltrd::year: int
+          )
+      }
+    }
+    Is is nested or flat?
+    - from the schema you can see group and jointable is nested inside groupjoin.
+
+(b) How long did your query run?
+  - Pig script completed in 1 minute, 30 seconds and 596 milliseconds (90596 ms)

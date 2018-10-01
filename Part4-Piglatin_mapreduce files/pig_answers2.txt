@@ -1,0 +1,53 @@
+(i)
+(a) How many Maps and Reduces are generated in each job?
+	- Job Stats (time in seconds):
+	JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+	job_1522192504000_4186	2	1	3	3	3	3	3	3	3	3	Fltrd,Fltrd2,Jnd,Smmd,moviegenres,movies	HASH_JOIN
+	job_1522192504000_4187	1	1	4	4	4	4	3	3	3	3		DISTINCT
+	job_1522192504000_4188	1	1	3	3	3	3	3	3	3	3	ordersmmd	SAMPLER
+	job_1522192504000_4189	1	1	3	3	3	3	2	2	2	2	ordersmmd	ORDER_BY	hdfs://cs421-hd1.cs.mcgill.ca:9000/tmp/temp226243225/tmp-1414229987,
+
+(b) What does the schema look like just after the join?
+		we used DESCRIBE, it returns the schema of a relation, for more detail:https://pig.apache.org/docs/r0.9.1/test.html
+	- Jnd: {
+    Fltrd2::movieid: int,
+    Fltrd2::genre: chararray,
+    Fltrd::movieid: int,
+    Fltrd::title: chararray,
+    Fltrd::year: int
+		}
+
+(c) How long did the query run?
+	- Pig script completed in 1 minute, 42 seconds and 331 milliseconds (102331 ms)
+
+(ii) Now modify this script to have your join step run with 4 reduce tasks.
+(a) How many Maps and Reduces are generated in each job?
+	- Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_1522192504000_4474	2	4	4	3	4	4	6	3	5	5	Fltrd,Fltrd2,Jnd,Smmd,moviegenres,movies	HASH_JOIN
+job_1522192504000_4476	1	1	9	9	9	9	4	4	4	4		DISTINCT
+job_1522192504000_4479	1	1	3	3	3	3	3	3	3	3	ordersmmd	SAMPLER
+job_1522192504000_4480	1	1	3	3	3	3	5	5	5	5	ordersmmd	ORDER_BY	hdfs://cs421-hd1.cs.mcgill.ca:9000/tmp/temp-650555962/tmp-1949374508,
+
+
+(b) How long did the query run?
+	- Pig script completed in 1 minute, 41 seconds and 678 milliseconds (101678 ms)
+
+(c) Is the difference in query execution time what you were expecting ?
+	- no i was expecting it to be shorter than the original, however the query execution time came out to be about the same.
+
+		Describe what you were expecting to see and (if that is not what happened in the end) why you think it did not happen?
+	- Like i mentioned previously, i was expecting it to be faster than the original, i think the reason why is because the map-to-reduce ratio is off for the modified one (See [5], the map and reduce number is more than [1]), using too many mappers or reducers could be the reason.
+	There could be other reasoning that could affect the job performance such as hardware, network I/O, cluster settings, code logic, and algorithm.
+
+provided notes:
+	the jobs of original:
+	[1]http://cs421-hd1.cs.mcgill.ca:19888/jobhistory/job/job_1522192504000_4186
+	[2]http://cs421-hd1.cs.mcgill.ca:8088/proxy/application_1522192504000_4187/
+	[3]http://cs421-hd1.cs.mcgill.ca:8088/proxy/application_1522192504000_4188/
+	[4]http://cs421-hd1.cs.mcgill.ca:8088/proxy/application_1522192504000_4189/
+	the jobs of modified:
+	[5]http://cs421-hd1.cs.mcgill.ca:19888/jobhistory/job/job_1522192504000_4474
+	[6]http://cs421-hd1.cs.mcgill.ca:8088/proxy/application_1522192504000_4476/
+	[7]http://cs421-hd1.cs.mcgill.ca:8088/proxy/application_1522192504000_4479/
+	[8]http://cs421-hd1.cs.mcgill.ca:8088/proxy/application_1522192504000_4480/
