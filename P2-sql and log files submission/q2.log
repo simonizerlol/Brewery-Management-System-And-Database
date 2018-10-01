@@ -1,0 +1,189 @@
+\d batch
+     Table "cs421g22.batch"
+  Column   |  Type   | Modifiers 
+-----------+---------+-----------
+ batchnum  | integer | not null
+ batchsize | integer | not null
+ datemade  | date    | not null
+ beerid    | integer | not null
+Indexes:
+    "batch_pkey" PRIMARY KEY, btree (batchnum, beerid)
+    "batch_batchnum_key" UNIQUE CONSTRAINT, btree (batchnum)
+Foreign-key constraints:
+    "batch_beerid_fkey" FOREIGN KEY (beerid) REFERENCES beer(beerid)
+Referenced by:
+    TABLE "beercase" CONSTRAINT "beercase_batchnum_fkey" FOREIGN KEY (batchnum) REFERENCES batch(batchnum)
+    TABLE "brews" CONSTRAINT "brews_batchnum_fkey" FOREIGN KEY (batchnum) REFERENCES batch(batchnum)
+
+\d beer
+               Table "cs421g22.beer"
+     Column     |         Type          | Modifiers 
+----------------+-----------------------+-----------
+ beerid         | integer               | not null
+ beername       | character varying(60) | 
+ abv            | double precision      | not null
+ ibu            | integer               | not null
+ pricepervolume | double precision      | not null
+ ingredientname | character varying(40) | 
+Indexes:
+    "beer_pkey" PRIMARY KEY, btree (beerid)
+    "beer_ingredientname_key" UNIQUE CONSTRAINT, btree (ingredientname)
+Referenced by:
+    TABLE "batch" CONSTRAINT "batch_beerid_fkey" FOREIGN KEY (beerid) REFERENCES beer(beerid)
+    TABLE "brews" CONSTRAINT "brews_beerid_fkey" FOREIGN KEY (beerid) REFERENCES beer(beerid)
+    TABLE "purchase" CONSTRAINT "purchase_beerid_fkey" FOREIGN KEY (beerid) REFERENCES beer(beerid)
+    TABLE "recipe" CONSTRAINT "recipe_beerid_fkey" FOREIGN KEY (beerid) REFERENCES beer(beerid)
+
+\d beercase
+        Table "cs421g22.beercase"
+  Column   |       Type       | Modifiers 
+-----------+------------------+-----------
+ caseid    | integer          | not null
+ caseprice | double precision | not null
+ casesize  | integer          | not null
+ batchnum  | integer          | not null
+Indexes:
+    "beercase_pkey" PRIMARY KEY, btree (caseid, batchnum)
+    "beercase_caseid_key" UNIQUE CONSTRAINT, btree (caseid)
+Foreign-key constraints:
+    "beercase_batchnum_fkey" FOREIGN KEY (batchnum) REFERENCES batch(batchnum)
+Referenced by:
+    TABLE "purchase" CONSTRAINT "purchase_caseid_fkey" FOREIGN KEY (caseid) REFERENCES beercase(caseid)
+
+\d brewer
+     Table "cs421g22.brewer"
+   Column   |  Type   | Modifiers 
+------------+---------+-----------
+ employeeid | integer | not null
+Indexes:
+    "brewer_pkey" PRIMARY KEY, btree (employeeid)
+Foreign-key constraints:
+    "brewer_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES employee(employeeid)
+
+\d brews
+      Table "cs421g22.brews"
+   Column   |  Type   | Modifiers 
+------------+---------+-----------
+ brewstart  | date    | not null
+ brewend    | date    | not null
+ employeeid | integer | not null
+ batchnum   | integer | not null
+ beerid     | integer | not null
+Foreign-key constraints:
+    "brews_batchnum_fkey" FOREIGN KEY (batchnum) REFERENCES batch(batchnum)
+    "brews_beerid_fkey" FOREIGN KEY (beerid) REFERENCES beer(beerid)
+    "brews_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES employee(employeeid)
+
+\d customer 
+              Table "cs421g22.customer"
+     Column     |          Type          | Modifiers 
+----------------+------------------------+-----------
+ customerid     | integer                | not null
+ customername   | character varying(60)  | not null
+ emailaddress   | character varying(100) | not null
+ deliveraddress | character varying(100) | not null
+ employeeid     | integer                | not null
+Indexes:
+    "customer_pkey" PRIMARY KEY, btree (customerid)
+Foreign-key constraints:
+    "customer_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES sales(employeeid)
+Referenced by:
+    TABLE "purchase" CONSTRAINT "purchase_customerid_fkey" FOREIGN KEY (customerid) REFERENCES customer(customerid)
+
+\d employee
+             Table "cs421g22.employee"
+    Column    |          Type          | Modifiers 
+--------------+------------------------+-----------
+ employeeid   | integer                | not null
+ employeename | character varying(60)  | not null
+ salary       | double precision       | not null
+ address      | character varying(200) | not null
+ startdate    | date                   | not null
+Indexes:
+    "employee_pkey" PRIMARY KEY, btree (employeeid)
+Referenced by:
+    TABLE "brewer" CONSTRAINT "brewer_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES employee(employeeid)
+    TABLE "brews" CONSTRAINT "brews_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES employee(employeeid)
+    TABLE "maintains" CONSTRAINT "maintains_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES employee(employeeid)
+    TABLE "maintenance" CONSTRAINT "maintenance_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES employee(employeeid)
+    TABLE "sales" CONSTRAINT "sales_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES employee(employeeid)
+
+\d equipment
+            Table "cs421g22.equipment"
+    Column     |         Type          | Modifiers 
+---------------+-----------------------+-----------
+ equipmentid   | integer               | not null
+ equipmentname | character varying(60) | not null
+ purchasedate  | date                  | not null
+Indexes:
+    "equipment_pkey" PRIMARY KEY, btree (equipmentid)
+Referenced by:
+    TABLE "maintains" CONSTRAINT "maintains_equipmentid_fkey" FOREIGN KEY (equipmentid) REFERENCES equipment(equipmentid)
+
+\d ingredients
+            Table "cs421g22.ingredients"
+     Column     |         Type          | Modifiers 
+----------------+-----------------------+-----------
+ ingredientname | character varying(40) | not null
+Indexes:
+    "ingredients_pkey" PRIMARY KEY, btree (ingredientname)
+Referenced by:
+    TABLE "recipe" CONSTRAINT "recipe_ingredientname_fkey" FOREIGN KEY (ingredientname) REFERENCES ingredients(ingredientname)
+
+\d maintains
+       Table "cs421g22.maintains"
+      Column      |  Type   | Modifiers 
+------------------+---------+-----------
+ latestinspection | date    | not null
+ equipmentid      | integer | not null
+ employeeid       | integer | not null
+Foreign-key constraints:
+    "maintains_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES employee(employeeid)
+    "maintains_equipmentid_fkey" FOREIGN KEY (equipmentid) REFERENCES equipment(equipmentid)
+
+\d maintenance
+   Table "cs421g22.maintenance"
+   Column   |  Type   | Modifiers 
+------------+---------+-----------
+ employeeid | integer | not null
+Indexes:
+    "maintenance_pkey" PRIMARY KEY, btree (employeeid)
+Foreign-key constraints:
+    "maintenance_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES employee(employeeid)
+
+\d purchase
+    Table "cs421g22.purchase"
+   Column   |  Type   | Modifiers 
+------------+---------+-----------
+ customerid | integer | not null
+ caseid     | integer | not null
+ beerid     | integer | not null
+Indexes:
+    "purchase_caseid_key" UNIQUE CONSTRAINT, btree (caseid)
+Foreign-key constraints:
+    "purchase_beerid_fkey" FOREIGN KEY (beerid) REFERENCES beer(beerid)
+    "purchase_caseid_fkey" FOREIGN KEY (caseid) REFERENCES beercase(caseid)
+    "purchase_customerid_fkey" FOREIGN KEY (customerid) REFERENCES customer(customerid)
+
+\d recipe
+              Table "cs421g22.recipe"
+     Column     |         Type          | Modifiers 
+----------------+-----------------------+-----------
+ beerid         | integer               | not null
+ ingredientname | character varying(20) | not null
+Foreign-key constraints:
+    "recipe_beerid_fkey" FOREIGN KEY (beerid) REFERENCES beer(beerid)
+    "recipe_ingredientname_fkey" FOREIGN KEY (ingredientname) REFERENCES ingredients(ingredientname)
+
+\d sales
+      Table "cs421g22.sales"
+   Column   |  Type   | Modifiers 
+------------+---------+-----------
+ employeeid | integer | not null
+Indexes:
+    "sales_pkey" PRIMARY KEY, btree (employeeid)
+Foreign-key constraints:
+    "sales_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES employee(employeeid)
+Referenced by:
+    TABLE "customer" CONSTRAINT "customer_employeeid_fkey" FOREIGN KEY (employeeid) REFERENCES sales(employeeid)
+

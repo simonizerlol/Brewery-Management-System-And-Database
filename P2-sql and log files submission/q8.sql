@@ -1,0 +1,14 @@
+\d batch
+\d beer
+\d beercase
+\d brewer
+\d brews
+\d customer 
+\d employee
+\d equipment
+\d ingredients
+\d maintains
+\d maintenance
+\d purchase
+\d recipe
+\d sales

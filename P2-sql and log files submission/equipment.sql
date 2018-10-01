@@ -1,0 +1,6 @@
+INSERT INTO equipment VALUES(85022914,'Falengie','1658-3-9');
+INSERT INTO equipment VALUES(55032921,'MicroFalengie','1329-8-22');
+INSERT INTO equipment VALUES(439701211,'Vat','1902-4-25');
+INSERT INTO equipment VALUES(825267089,'SiphonDiphon','1612-5-14');
+INSERT INTO equipment VALUES(263174561,'DistilMyShistil','1652-8-20');
+INSERT INTO equipment VALUES(350718332,'LolIDK','1527-2-25');

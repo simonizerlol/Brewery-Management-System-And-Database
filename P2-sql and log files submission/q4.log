@@ -1,0 +1,131 @@
+select * from batch limit 5;
+ batchnum  | batchsize |  datemade  |  beerid   
+-----------+-----------+------------+-----------
+ 637647382 |         5 | 1542-09-10 | 693734615
+ 181587106 |       785 | 1624-07-06 | 693734615
+ 181057659 |        52 | 1213-09-01 | 693734615
+ 114551283 |       111 | 1651-06-10 | 693734615
+ 548309579 |       602 | 1720-06-05 | 693734615
+(5 rows)
+
+select * from beer limit 5;
+  beerid   |            beername            |  abv  | ibu | pricepervolume | ingredientname 
+-----------+--------------------------------+-------+-----+----------------+----------------
+ 693734615 | TearsOfAVirgin                 |   7.2 |  64 |           3.15 | 
+ 344260827 | SaltySeaWater                  |  7.29 |  38 |           4.95 | 
+  92636195 | GaseousVolcano                 | 10.73 | 109 |            3.4 | 
+ 733993151 | LiquidIceberg                  | 11.55 |  69 |            3.1 | 
+ 415254748 | LukeSkyWalkersGreenNippleJuice | 10.33 |  80 |           3.21 | 
+(5 rows)
+
+select * from beercase limit 5;
+  caseid   | caseprice | casesize | batchnum  
+-----------+-----------+----------+-----------
+ 566784893 |     12.99 |       12 | 637647382
+ 888715107 |     48.99 |       48 | 637647382
+ 690434741 |     24.99 |       24 | 637647382
+  50245740 |     36.99 |       36 | 637647382
+    554879 |     24.99 |       24 | 637647382
+(5 rows)
+
+select * from brewer limit 5;
+ employeeid 
+------------
+  882007008
+  782071604
+(2 rows)
+
+select * from brews limit 5;
+ brewstart  |  brewend   | employeeid | batchnum  |  beerid   
+------------+------------+------------+-----------+-----------
+ 1424-05-23 | 1425-06-01 |  232716130 | 122497173 | 344260827
+ 1828-06-17 | 1829-11-16 |  100326124 | 865017015 | 224571418
+ 1199-05-09 | 1200-09-04 |  114136446 | 264400449 |  92636195
+ 1369-04-15 | 1370-09-14 |  324512729 | 637647382 | 733993151
+ 1586-07-26 | 1587-06-19 |  324512729 | 220387921 | 415254748
+(5 rows)
+
+select * from customer limit 5;
+ customerid |    customername    |         emailaddress          |   deliveraddress   | employeeid 
+------------+--------------------+-------------------------------+--------------------+------------
+  942136591 | Mr. Poopy Butthole | 420blazeit@hotmail.com        | 1 Ave WALAO        |  232716130
+   26493178 | Bev                | wakaka@gmail.com              | 6 Hong Gan Plz     |  232716130
+  958685071 | Jerry              | youdontknowme@yahoo.com       | Area 51            |  232716130
+  340733760 | Rick               | bigcowstrongchicken@gmail.com | The Jupiter System |  232716130
+   70564146 | Morty              | dropitlikeitscold@hotmail.com | Hoth Rebel Base    |  232716130
+(5 rows)
+
+select * from employee limit 5;
+ employeeid | employeename | salary |                      address                       | startdate  
+------------+--------------+--------+----------------------------------------------------+------------
+  882007008 | Tynan Davis  | 314013 | 3501 rue University, Quebec, Canada                | 1103-06-03
+  782071604 | Alex Wong    | 944385 | 42 Wallaby Way, Sydney, Australia                  | 1204-02-14
+  232716130 | Simon Hsu    | 461835 | Wayne Manor, Gotham City, USA                      | 1973-08-11
+  324512729 | Andrew Tran  | 714287 | 2001 Dark Side, Moon                               | 1422-03-15
+  100326124 | Steve Jobs   | 170827 | Cantina, Mos Eisley, Tatooine, Galaxy Far Far Away | 1617-07-23
+(5 rows)
+
+select * from equipment limit 5;
+ equipmentid |  equipmentname  | purchasedate 
+-------------+-----------------+--------------
+    85022914 | Falengie        | 1658-03-09
+    55032921 | MicroFalengie   | 1329-08-22
+   439701211 | Vat             | 1902-04-25
+   825267089 | SiphonDiphon    | 1612-05-14
+   263174561 | DistilMyShistil | 1652-08-20
+(5 rows)
+
+select * from ingredients limit 5;
+ ingredientname 
+----------------
+ Water
+ Hops
+ Apple
+ Pear
+ Cinamon
+(5 rows)
+
+select * from maintains limit 5;
+ latestinspection | equipmentid | employeeid 
+------------------+-------------+------------
+ 1305-02-07       |   263174561 |  882007008
+ 1256-09-27       |   439701211 |  882007008
+ 1831-02-22       |   439701211 |  114136446
+ 1288-09-27       |   439701211 |  114136446
+ 1129-09-09       |   350718332 |  882007008
+(5 rows)
+
+select * from maintenance limit 5;
+ employeeid 
+------------
+  100326124
+  114136446
+(2 rows)
+
+select * from purchase limit 5;
+ customerid |  caseid   |  beerid   
+------------+-----------+-----------
+   70564146 | 566784893 | 693734615
+  942136591 | 888715107 | 224571418
+   26493178 | 690434741 |  92636195
+  340733760 |  50245740 | 344260827
+  942136591 |    554879 |  92636195
+(5 rows)
+
+select * from recipe limit 5;
+  beerid   | ingredientname 
+-----------+----------------
+ 344260827 | ToadsEyes
+ 733993151 | Barley
+ 415254748 | Barley
+ 344260827 | Barley
+ 344260827 | Cinamon
+(5 rows)
+
+select * from sales limit 5;
+ employeeid 
+------------
+  232716130
+  324512729
+(2 rows)
+

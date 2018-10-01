@@ -1,0 +1,143 @@
+-- Find all the beer details of distinct batches of beers brewed by brewers named 'Alex'.
+
+SELECT *
+FROM beer
+JOIN
+	(SELECT beerid, batchnum
+	FROM brews
+	WHERE employeeid
+	IN
+		(SELECT *
+		FROM brewer
+		WHERE employeeid
+		IN
+			(SELECT employeeid
+			FROM employee
+			WHERE employeename
+			LIKE 'Alex%')))
+			AS beerinfo
+ON beer.beerid=beerinfo.beerid
+;
+  beerid   |   beername    |  abv  | ibu | pricepervolume |  beerid   | batchnum  
+-----------+---------------+-------+-----+----------------+-----------+-----------
+ 733993151 | LiquidIceberg | 11.55 |  69 |            3.1 | 733993151 | 907004194
+ 344260827 | SaltySeaWater |  7.29 |  38 |           4.95 | 344260827 | 759215784
+ 733993151 | LiquidIceberg | 11.55 |  69 |            3.1 | 733993151 | 392575229
+(3 rows)
+
+
+-- List all beer names and quantity of cases purchased by customers named ‘Morty’
+
+SELECT beername, COUNT(customerid)
+AS number_of_cases
+FROM beer
+JOIN purchase 
+ON beer.beerid=purchase.beerid
+WHERE beer.beerid
+IN
+	(SELECT beerid
+	FROM purchase
+	WHERE customerid
+	IN
+		(SELECT customerid
+		FROM customer
+		WHERE customername
+		LIKE 'Morty%'))
+GROUP BY beername
+;
+            beername            | number_of_cases 
+--------------------------------+-----------------
+ LukeSkyWalkersGreenNippleJuice |               4
+ GaseousVolcano                 |               6
+ TearsOfAVirgin                 |               1
+(3 rows)
+
+
+
+-- List all beer names, batchnum, abv, and their brewer with abv above 8.0% that were brewed by either 'Tynan' or 'Alex'. Order by employeename.
+
+SELECT beername, batchnum, abv, employeename AS brewer
+FROM beer
+JOIN brews
+ON beer.beerid=brews.beerid
+JOIN employee
+ON brews.employeeid=employee.employeeid
+WHERE beer.abv > 8.0
+AND brews.employeeid
+IN
+	(SELECT *
+	FROM brewer
+	WHERE employeeid
+	IN
+		(SELECT employeeid
+		FROM employee
+		WHERE employeename
+		LIKE 'Alex%'
+		OR employeename
+		LIKE 'Tynan%'))
+ORDER BY employeename
+;
+            beername            | batchnum  |  abv  |   brewer    
+--------------------------------+-----------+-------+-------------
+ LiquidIceberg                  | 907004194 | 11.55 | Alex Wong
+ LiquidIceberg                  | 392575229 | 11.55 | Alex Wong
+ LukeSkyWalkersGreenNippleJuice | 383534997 | 10.33 | Tynan Davis
+(3 rows)
+
+
+-- Find all ingredients in beer 'SaltySeaWater' ORDER BY ingredient.
+
+SELECT ingredientname
+FROM recipe
+WHERE beerid
+IN
+	(SELECT beerid
+	FROM beer
+	WHERE beername = 'SaltySeaWater')
+ORDER BY ingredientname
+;
+ ingredientname 
+----------------
+ Apple
+ Barley
+ Barley
+ Barley
+ Barley
+ Cinamon
+ Cinamon
+ DragonsBeard
+ DragonsBeard
+ DragonsBeard
+ DragonsBeard
+ Hops
+ Hops
+ Hops
+ LiquidFire
+ Pear
+ ToadsEyes
+ ToadsEyes
+ Water
+ Water
+(20 rows)
+
+
+-- Find the average abv of all beers except for the strongest beer.
+
+SELECT AVG(abv)
+AS avg_abv
+FROM beer
+WHERE beerid
+NOT IN
+	(SELECT beerid
+	FROM beer
+	WHERE abv
+	IN
+		(SELECT MAX(abv)
+		FROM beer))
+;
+ avg_abv 
+---------
+   9.076
+(1 row)
+
+

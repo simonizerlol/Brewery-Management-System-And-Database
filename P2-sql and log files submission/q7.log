@@ -1,0 +1,19 @@
+CREATE VIEW
+CREATE VIEW
+
+cs421=> SELECT * from light_beer_list;
+    beername
+----------------
+ TearsOfAVirgin
+ SaltySeaWater
+(2 rows)
+
+cs421=> select * from all_employees limit 5;
+ employeename
+--------------
+ Tynan Davis
+ Alex Wong
+ Simon Hsu
+ Andrew Tran
+ Steve Jobs
+(5 rows)
