@@ -12,3 +12,8 @@ A mini brewery database system blueprint for every man's dream.
 * SQL database scheme: Done
 * Automated data generator written in Java: Done
 * MapReduce with Piglatin: Done
+
+### Members:
+* Tynan Davis 
+* Alex Wong
+* Andrew Tran
