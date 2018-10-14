@@ -8,8 +8,8 @@ The main objective for any micro brewery is to brew tasty beers. Usually, a micr
 Our database for the Super Duper Microbrewery is for a single location, not a network of breweries. Shipping/delivery is outsourced so is not accounted for in this database. Purchasing (of ingredients, equipment, and all other resources) is externally managed and thus not included in our scope. The same can be said for payment, hiring, leave management, and other administrative processes.
 
 ### Terminology
-ABV - Alcohol By Volume
-IBU - International Bitterness
+ABV - Alcohol By Volume <br />
+IBU - International Bitterness <br />
 Units Beer - Fun Juice
 
 ## Database description
