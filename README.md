@@ -66,7 +66,7 @@ The following entities will be stored in tables of a relational database:
 ### Development Status:
 * ER Diagram: Done
 * Relation model: Done
-* SQL database scheme: Done
+* SQL database schema: Done
 * Automated data generator written in Java: Done
 * MapReduce with Piglatin: Done
 
