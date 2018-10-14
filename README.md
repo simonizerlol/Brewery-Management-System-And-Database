@@ -9,7 +9,8 @@ Our database for the Super Duper Microbrewery is for a single location, not a ne
 
 ### Terminology
 ABV - Alcohol By Volume
-IBU - International Bitterness Units Beer - Fun Juice
+IBU - International Bitterness
+Units Beer - Fun Juice
 
 ## Database description
 ### Entities and their attributes:
