@@ -73,6 +73,7 @@ The following entities will be stored in tables of a relational database:
 ![Brewery-Management-System-And-Database](assets/meme.png)
 
 ### Members:
+* Simon Hsu
 * Tynan Davis
 * Alex Wong
 * Andrew Tran
